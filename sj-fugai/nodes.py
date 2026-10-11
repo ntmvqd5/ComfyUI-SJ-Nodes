@@ -45,7 +45,18 @@ class NineWanLiSJFugai:
             sh, sw = small.shape[0], small.shape[1]
             bh, bw = big.shape[0], big.shape[1]
             if sw > bw or sh > bh:
-                return (image_2,)
+                scale = min(bw / sw, bh / sh)
+                nw = max(int(round(sw * scale)), 1)
+                nh = max(int(round(sh * scale)), 1)
+                try:
+                    pil = Image.fromarray(
+                        (np.clip(small, 0.0, 1.0) * 255.0).round().astype(np.uint8)
+                    ).convert("RGB")
+                    pil = pil.resize((nw, nh), Image.LANCZOS)
+                    small = np.array(pil).astype(np.float32) / 255.0
+                    sh, sw = nh, nw
+                except Exception:
+                    return (None,)
             left = (bw - sw) // 2
             top = (bh - sh) // 2
             big = np.array(big, dtype=np.float32).copy()
