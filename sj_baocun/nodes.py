@@ -18,7 +18,7 @@ try:
 except ImportError:
     folder_paths = None
 
-JPEG_QUALITY = 100
+JPEG_QUALITY = 95
 PREFIX = "SHUNJINGAI"
 CATEGORY = "SJ"
 

@@ -13,7 +13,7 @@ except ImportError:
     Image = None
 
 MAX_SIDE = 4500
-JPEG_QUALITY = 100
+JPEG_QUALITY = 95
 CATEGORY = "SJ"
 
 
