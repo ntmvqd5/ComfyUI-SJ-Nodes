@@ -27,10 +27,11 @@ class NineWanLiSJFugai:
             "optional": {
                 "image_1": ("IMAGE",),
                 "image_2": ("IMAGE",),
+                "feather": ("INT", {"default": 3, "min": 0, "max": 64, "display": "边缘羽化(像素)"}),
             },
         }
 
-    def fugai(self, image_1=None, image_2=None):
+    def fugai(self, image_1=None, image_2=None, feather=3):
         if image_1 is None or image_2 is None or torch is None or Image is None:
             return (None,)
         try:
@@ -60,7 +61,17 @@ class NineWanLiSJFugai:
             left = (bw - sw) // 2
             top = (bh - sh) // 2
             big = np.array(big, dtype=np.float32).copy()
-            big[top:top + sh, left:left + sw, :] = small[:sh, :sw, :]
+            region = big[top:top + sh, left:left + sw, :]
+            f = int(feather) if feather is not None else 0
+            f = min(max(f, 0), min(sw, sh) // 2)
+            if f > 0 and min(sw, sh) >= 4:
+                yy = np.minimum(np.arange(sh), np.arange(sh - 1, -1, -1))
+                xx = np.minimum(np.arange(sw), np.arange(sw - 1, -1, -1))
+                d = np.minimum(yy[:, None], xx[None, :])
+                alpha = np.clip(d / float(f), 0.0, 1.0).astype(np.float32)[:, :, None]
+                big[top:top + sh, left:left + sw, :] = small * alpha + region * (1.0 - alpha)
+            else:
+                big[top:top + sh, left:left + sw, :] = small[:sh, :sw, :]
             big = np.expand_dims(big, 0)
             return (torch.from_numpy(big),)
         except Exception:
