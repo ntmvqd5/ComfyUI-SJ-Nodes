@@ -31,7 +31,7 @@ ComfyUI 实用节点包：图片压缩与图片保存。
 git clone https://github.com/ntmvqd5/ComfyUI-SJ-Nodes.git
 ```
 
-重启 ComfyUI 后，节点位于「木木」分类下。
+重启 ComfyUI 后，节点位于「SJ」分类下。
 
 ## 依赖
 

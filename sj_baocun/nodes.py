@@ -20,7 +20,7 @@ except ImportError:
 
 JPEG_QUALITY = 95
 PREFIX = "SHUNJINGAI"
-CATEGORY = "木木"
+CATEGORY = "SJ"
 
 
 class NineWanLiSJBaocun:

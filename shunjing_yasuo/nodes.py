@@ -14,7 +14,7 @@ except ImportError:
 
 MAX_SIDE = 4500
 JPEG_QUALITY = 95
-CATEGORY = "木木"
+CATEGORY = "SJ"
 
 
 class NineWanLiShunjingCompress:
