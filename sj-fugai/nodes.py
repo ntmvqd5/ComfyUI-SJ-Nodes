@@ -44,10 +44,10 @@ class NineWanLiSJFugai:
             big = b[0]
             sh, sw = small.shape[0], small.shape[1]
             bh, bw = big.shape[0], big.shape[1]
-            if sw > bw or sh > bh:
-                scale = min(bw / sw, bh / sh)
-                nw = max(int(round(sw * scale)), 1)
-                nh = max(int(round(sh * scale)), 1)
+            scale = min(bw / sw, bh / sh)
+            nw = max(int(round(sw * scale)), 1)
+            nh = max(int(round(sh * scale)), 1)
+            if nw != sw or nh != sh:
                 try:
                     pil = Image.fromarray(
                         (np.clip(small, 0.0, 1.0) * 255.0).round().astype(np.uint8)
